@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head-doc.ejs') %>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../partials/nav.ejs') %>
+
+<!-- Main Sidebar Container -->
+<%- include('../partials/aside.ejs') %>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>response</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">response</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="card">
+              <div class="card-header">
+                  <div class="row">
+                      <div class="col-sm-12 text-right">
+                        <div class="col-auto ms-auto d-print-none">
+                          <div class="d-flex justify-content-end">
+                            <a href="/addResponse" class="btn btn-primary d-none d-sm-inline-block" >
+                              Create new response
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% responseSubUrgance.forEach((response) => { %>
+                      <tr>
+                        <td class="text-center"><%= response.title %></td>
+                        <td class="text-center"><%= response.description.substring(0, 50) + '...' %></td>
+                        <td class="text-center">
+                          <a href="/update-response/<%= response.id %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                          <a href="/response-delete/<%= response.id %>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                          <a href="/details-response/<%= response.id %>" class="btn btn-info"><i class="fas fa-info"></i></a>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Title</th>
+                      <th>description</th>
+                      <th>Action</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="http://elhassaniomar.c1.biz">elhassaniomar.c1.biz</a>.</strong>
+    All rights reserved.
+  </footer> -->
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<%- include('../partials/scripts-doc.ejs') %>
+
+</body>
+</html>

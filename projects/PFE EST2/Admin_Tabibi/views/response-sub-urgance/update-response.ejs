@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head-doc.ejs') %>
+<head><style>
+  .image-container {
+    border: 2px solid #000;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .rectangle-image {
+    width: 200px;
+    height: 180px;
+    object-fit: cover;
+  }
+</style></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../partials/nav.ejs') %>
+
+<!-- Main Sidebar Container -->
+<%- include('../partials/aside.ejs') %>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1> update response</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">update responses</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+ 
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card" style="padding: 30px;">
+              <form id="update-urgance-form" method="post" action="/update-response-data/<%= response.id %>" enctype="multipart/form-data">
+                <h5 style="color: red;">Data obligatoire</h5>
+                <div class="mb-3">
+                  <label class="form-label">Urgance Name</label>
+                  <input type="text" class="form-control" name="sub-urgance-name" id="sub-urgance-name" placeholder="Name" value="<%= response.title %>" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description" rows="5" placeholder="Enter description" required><%= response.description %></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="form-label">Current response image</label>
+                      <div class="d-flex align-items-center">
+                        <% if (images && images.length > 0) { %>
+                          <% images.forEach(image => { %>
+                            <% console.log(image); %> <!-- Add this line -->
+                            <div class="image-container">
+                            <img src="<%= image.image_url || image %>" width="200px" height="180px">
+                          </div>
+                            <% }) %>
+                        <% } else { %>
+                          <p>No images available</p>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="form-label">New response image</label>
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="dropzone" id="dropzone-default">
+                            <div class="fallback">
+                              <!-- Ensure the name attribute is set to 'image' -->
+                              <input name="image" type="file" multiple required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary ms-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M12 5l0 14" />
+                      <path d="M5 12l14 0" />
+                    </svg>
+                    Update response
+                  </button>
+                </div>
+              </form>
+              
+              
+              
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="http://elhassaniomar.c1.biz">elhassaniomar.c1.biz</a>.</strong>
+    All rights reserved.
+  </footer> -->
+
+</div>
+<!-- ./wrapper -->
+<%- include('../partials/scripts-doc.ejs') %>
+
+</body>
+</html>

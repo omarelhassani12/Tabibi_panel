@@ -1,0 +1,119 @@
+<script>
+    $(document).ready(function() {
+    // Handle search input
+    $("#search-input").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $(".card").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  
+  </script>
+  <script>
+    $(document).ready(function() {
+    // Handle pagination
+    var itemsPerPage = 18;
+    var currentPage = 1;
+    var totalItems = $(".card").length;
+    var totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+    function showPage(page) {
+      $(".card").hide();
+      var startIndex = (page - 1) * itemsPerPage;
+      var endIndex = startIndex + itemsPerPage;
+      $(".card").slice(startIndex, endIndex).show();
+      $("#pagination .page-item").removeClass("active");
+      $("#pagination .page-item:nth-child(" + (page + 1) + ")").addClass("active");
+      $("#pagination-prev").toggleClass("disabled", page === 1);
+      $("#pagination-next").toggleClass("disabled", page === totalPages);
+    }
+  
+    $("#pagination-prev").on("click", function() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    });
+  
+    $("#pagination-next").on("click", function() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    });
+  
+    $("#pagination .page-item").slice(1, -1).on("click", function() {
+      currentPage = $(this).index();
+      showPage(currentPage);
+    });
+  
+    showPage(currentPage);
+  });
+  
+  </script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../plugins/jszip/jszip.min.js"></script>
+  <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        "buttons": ["copy", "csv", "excel", "pdf", "print"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
+      <!-- Libs JS -->
+      <script src="../../static/libs/dropzone/dist/dropzone-min.js?1674944402" defer></script>
+      <!-- Tabler Core -->
+      <script src="../../static/js/tabler.min.js?1674944402" defer></script>
+      <script src="../../static/js/demo.min.js?1674944402" defer></script>
+      <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+          new Dropzone("#dropzone-default")
+        })
+      </script>
+      <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+          new Dropzone("#dropzone-multiple")
+        })
+      </script>
+      <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+          new Dropzone("#dropzone-custom")
+        })
+      </script>

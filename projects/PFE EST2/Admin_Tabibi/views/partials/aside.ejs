@@ -1,0 +1,147 @@
+<aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
+      <img src="./images/TABIBI.png" alt="TABIBI"style="width: 200px; height: 70px;">
+      <!-- <span class="brand-text font-weight-bolder">DR. HANAA DRAA</span> -->
+    </a>
+  
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="./dist/img/avatar2.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block"><%= "S" %></a>
+        </div>
+      </div> -->
+  
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button title="sidebar" class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="/" class="nav-link  <%= activePage === 'dashboard' ? 'active' : '' %>">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="/urgances" class="nav-link <%= activePage === 'urgances' ? 'active' : '' %>">
+              <i class="nav-icon fas fa-ambulance"></i>
+              <p>
+                Urgences
+              </p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/sub-urgances" class="nav-link <%= activePage === 'sub-urgances' ? 'active' : '' %>">
+              <i class="nav-icon fas fa-first-aid"></i>
+              <p>
+                Sous Urgance
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/response-sub-urgance" class="nav-link  <%= activePage === 'response-sub-urgance' ? 'active' : '' %>">
+              <i class="nav-icon fas fa-hand-holding-medical"></i>
+              <p>
+                Reponse Sous Urgance
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                users
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/users" class="nav-link  <%= activePage === 'users' ? 'active' : '' %>">
+                  <i class="nav-icon fas fa-user"></i>
+                  <p>
+                    All users
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/doctors" class="nav-link <%= activePage === 'doctos' ? 'active' : '' %>">
+                  <i class="nav-icon fas fa-user-md"></i>
+                  <p>
+                    Doctors
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/patients" class="nav-link <%= activePage === 'patients' ? 'active' : '' %>">
+                  <i class="nav-icon fas fa-procedures"></i>
+                  <p>
+                    Patients
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/assistant" class="nav-link <%= activePage === 'assistant' ? 'active' : '' %>">
+                  <i class="nav-icon fas fa-user-tie"></i>
+                  <p>
+                    Assistant
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Logout link -->
+          <li class="nav-item">
+            <a href="#" class="nav-link logout-link" style="background-color: red; color: white;" data-bs-toggle="modal" data-bs-target="#logoutModal">
+              <i class="fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Logout Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a href="/auth/logout" class="btn btn-danger">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
