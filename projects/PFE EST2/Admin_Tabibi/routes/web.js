@@ -67,54 +67,6 @@ route.get('/', checkAuth, (req, res) => {
   });
 });
 
-// route.get('/', checkAuth, (req, res) => {
-//   const userCountSql = `
-//     SELECT 
-//       (SELECT COUNT(*) FROM users) AS userCount,
-//       (SELECT COUNT(*) FROM users WHERE role = 'Doctor') AS doctorCount,
-//       (SELECT COUNT(*) FROM users WHERE role = 'Patient') AS patientCount,
-//       (SELECT COUNT(*) FROM urgance) AS urganceCount
-//   `;
-
-//   const ageDistributionSql = `
-//     SELECT age, COUNT(*) AS userCount FROM users GROUP BY age ORDER BY age
-//   `;
-
-//   db.query(userCountSql, (err, userCountResults) => {
-//     if (err) {
-//       throw err;
-//     }
-
-//     const userCount = userCountResults[0].userCount;
-//     const doctorCount = userCountResults[0].doctorCount;
-//     const patientCount = userCountResults[0].patientCount;
-//     const urganceCount = userCountResults[0].urganceCount;
-
-//     db.query(ageDistributionSql, (err, ageDistributionResults) => {
-//       if (err) {
-//         throw err;
-//       }
-
-//       const ageGroups = ageDistributionResults.map((row) => row.age);
-//       const userCounts = ageDistributionResults.map((row) => row.userCount);
-
-//       res.render('index', {
-//         title: 'Home',
-//         activePage: 'dashboard',
-//         userCount: userCount,
-//         doctorCount: doctorCount,
-//         patientCount: patientCount,
-//         urganceCount: urganceCount,
-//         ageGroups: JSON.stringify(ageGroups),
-//         userCounts: JSON.stringify(userCounts)
-//       });
-//     });
-//   });
-// });
-
-
-
-
 // ///////////////////////////////USERS ROUTES //////////////////////////////
 
 ////users routes
@@ -131,10 +83,10 @@ route.get('/doctors',checkAuth,(req, res) => {
 route.get('/patients',checkAuth,(req, res) => {
   res.render('patients/index', { title: 'patients' , activePage: 'patients' });
 });
-////assistant routes
-route.get('/assistant',checkAuth,(req, res) => {
- res.render('assistant/index', { title: 'assistant' , activePage: 'assistant' });
-});
+// ////assistant routes
+// route.get('/assistant',checkAuth,(req, res) => {
+//  res.render('assistant/index', { title: 'assistant' , activePage: 'assistant' });
+// });
 
 // ///////////////////////////////URGENCY ROUTES //////////////////////////////
 

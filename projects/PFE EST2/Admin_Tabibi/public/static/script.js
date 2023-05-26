@@ -27,7 +27,7 @@ fetch('/GetUsers')
       const cardContent = `
         <div class="card">
           <div class="card-body p-4 text-center">
-            <span class="avatar avatar-xl mb-3 rounded" style="background-image: url('./static/img/user.png')"></span>
+            <span class="avatar avatar-xl mb-3 rounded" style="background-image: url('${user.avatar}')"></span>
             <h3 class="m-0 mb-1"><a href="#">${user.username}</a></h3>
             <div class="mt-3">
               <span class="${badgeClass}">${user.role}</span>
@@ -125,7 +125,7 @@ function deleteUser(event) {
                 const cardContent = `
                   <div class="card">
                     <div class="card-body p-4 text-center">
-                      <span class="avatar avatar-xl mb-3 rounded" style="background-image: url('./static/img/user.png')"></span>
+                      <span class="avatar avatar-xl mb-3 rounded" style="background-image: url('${user.avatar}')"></span>
                       <h3 class="m-0 mb-1"><a href="#">${user.username}</a></h3>
                       <div class="mt-3">
                         <span class="${badgeClass}">${user.role}</span>
@@ -185,18 +185,17 @@ function getUserDetails(userId) {
           </div>
           <div class="modal-body">
             <div class="text-center">
-              <img src="./img/user.png" alt="User Image" class="img-fluid rounded-circle mb-3" style="width: 150px;">
+            ${user.avatar ? `<img src="${user.avatar}" alt="User Image" class="img-fluid rounded-circle mb-3" style="width: 150px;">` : ''}
             </div>
-            <p><strong>Role:</strong> <span id="userDetailsRole">${user.role}</span></p>
-            <p><strong>Username:</strong> <span id="userDetailsUsername">${user.username}</span></p>
-            <p><strong>Email:</strong> <span id="userDetailsEmail">${user.email}</span></p>
-            <p><strong>CNI:</strong> <span id="userDetailsCNI">${user.cni ? user.cni : ''}</span></p>
-            <p><strong>Password:</strong> <span id="userDetailsPassword">${user.password ? user.password : ''}</span></p>
-            <p><strong>Phone:</strong> <span id="userDetailsPhone">${user.phone ? user.phone : ''}</span></p>
-            <p><strong>Urgence:</strong> <span id="userDetailsUrgence">${user.urgence ? user.urgence : ''}</span></p>
-            <p><strong>Sexe:</strong> <span id="userDetailsSexe">${user.sexe ? user.sexe : ''}</span></p>
-            <p><strong>Age:</strong> <span id="userDetailsAge">${user.age ? user.age : ''}</span></p>
-            <p><strong>Speciality:</strong> <span id="userDetailsSpeciality">${user.speciality ? user.speciality : ''}</span></p>
+            ${user.role ? `<h6><strong>Role:</strong> <span id="userDetailsRole">${user.role}</span></h6>` : ''}
+            ${user.username ? `<p><strong>Username:</strong> <span id="userDetailsUsername">${user.username}</span></p>` : ''}
+            ${user.email ? `<p><strong>Email:</strong> <span id="userDetailsEmail">${user.email}</span></p>` : ''}
+            ${user.cni ? `<p><strong>CNI:</strong> <span id="userDetailsCNI">${user.cni ? user.cni : ''}</span></p>` : ''}
+            ${user.phone ? `<p><strong>Phone:</strong> <span id="userDetailsPhone">${user.phone ? user.phone : ''}</span></p>` : ''}
+            ${user.urgence ? `<p><strong>Urgence:</strong> <span id="userDetailsUrgence">${user.urgence ? user.urgence : ''}</span></p>` : ''}
+            ${user.sexe ? `<p><strong>Sexe:</strong> <span id="userDetailsSexe">${user.sexe ? user.sexe : ''}</span></p>` : ''}
+            ${user.age ? `<p><strong>Age:</strong> <span id="userDetailsAge">${user.age ? user.age : ''}</span></p>` : ''}
+            ${user.speciality ? `<p><strong>Speciality:</strong> <span id="userDetailsSpeciality">${user.speciality ? user.speciality : ''}</span></p>` : ''}
           </div>
         </div>
       </div>
