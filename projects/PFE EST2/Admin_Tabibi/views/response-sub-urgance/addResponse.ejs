@@ -50,22 +50,41 @@
                 <div class="mb-3">
                   <label class="form-label">Sub urgency</label>
                   <select class="form-select" name="category" required>
-                    <optgroup label="Select sub urgance">
+                    <optgroup label="Select sub urgency">
                       <% sub_urgances.forEach((sub_urgance) => { %>
-                        <option value="<%= sub_urgance.id %>"><%= sub_urgance.name %></option>
+                      <option value="<%= sub_urgance.id %>"><%= sub_urgance.name %></option>
                       <% }); %>
                     </optgroup>
-                  </select>                  
+                  </select>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">Response Image</label>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="dropzone" id="dropzone-default">
-                            <div class="fallback">
-                              <input name="images" type="file" multiple required>
+   
+                <div class="row">
+                  <div class="mb-3">
+                    <label class="form-label">Image title</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="dropzone" id="dropzone-default">
+                              <div class="fallback">
+                                <input id="image_title" name="image_title" type="file">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Image Response</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="dropzone" id="dropzone-default">
+                              <div class="fallback">
+                                <input id="images" name="images" type="file">
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -77,7 +96,7 @@
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-primary ms-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M12 5l0 14" />
                       <path d="M5 12l14 0" />
                     </svg>
@@ -86,7 +105,7 @@
                 </div>
               </form>
               
-                  
+                
               <!-- /.card-body -->
             </div>
             <!-- /.card -->

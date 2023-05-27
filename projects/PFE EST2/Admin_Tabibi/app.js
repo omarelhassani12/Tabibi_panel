@@ -269,8 +269,9 @@ app.get('/delete-suburgance/:id', (req, res) => {
   });
 });
 //upload response
-app.post('/response-upload', upload.array('images'), (req, res) => {
-  const imageFiles = req.files;
+app.post('/response-upload', upload.fields([{ name: 'images' }, { name: 'image_title' }]), (req, res) => {
+  const imageFiles = req.files['images'];
+  const imageTitleFiles = req.files['image_title'];
   const responseData = {
     title: req.body['response-title'],
     description: req.body['description'],
@@ -278,8 +279,8 @@ app.post('/response-upload', upload.array('images'), (req, res) => {
   };
 
   // Insert response data into the 'response' table
-  const sql = "INSERT INTO response (title, description, suburganceid, created_at) VALUES (?, ?, ?, NOW())";
-  db.query(sql, [responseData.title, responseData.description, responseData.sub_urgance_id], (err, result) => {
+  const sql = "INSERT INTO response (title, description, image_title, desc_image, suburganceid, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
+  db.query(sql, [responseData.title, responseData.description, null, '', responseData.sub_urgance_id], (err, result) => {
     if (err) {
       throw err;
     }
@@ -288,8 +289,11 @@ app.post('/response-upload', upload.array('images'), (req, res) => {
     let processedImages = 0;
 
     // Iterate over each uploaded image
-    for (const imageFile of imageFiles) {
+    for (let i = 0; i < imageFiles.length; i++) {
+      const imageFile = imageFiles[i];
+      const imageTitleFile = imageTitleFiles[i];
       const { originalname, mimetype, buffer } = imageFile;
+      const imageTitle = imageTitleFile ? imageTitleFile.filename : null;
 
       // Upload image to Cloudinary
       cloudinary.uploader.upload_stream((error, result) => {
@@ -299,9 +303,9 @@ app.post('/response-upload', upload.array('images'), (req, res) => {
 
         const { public_id, secure_url } = result;
 
-        // Insert image URL into the 'response_images' table
-        const imageSql = "INSERT INTO response_image (response_id, image_url) VALUES (?, ?)";
-        db.query(imageSql, [responseId, secure_url], (err, result) => {
+        // Update the 'response' table with the image URL and image title
+        const updateSql = "UPDATE response SET desc_image = ?, image_title = ? WHERE id = ?";
+        db.query(updateSql, [secure_url, imageTitle || secure_url, responseId], (err, result) => {
           if (err) {
             throw err;
           }
@@ -317,7 +321,7 @@ app.post('/response-upload', upload.array('images'), (req, res) => {
       }).end(buffer);
     }
   });
-});
+});git 
 //get sub urgances to add it to response
 app.get('/response-sub-urgance', (req, res) => {
   const sql = 'SELECT * FROM response';
@@ -334,30 +338,21 @@ app.get('/response-sub-urgance', (req, res) => {
 app.get('/response-delete/:id', (req, res) => {
   const responseId = req.params.id;
 
-  // Supprimer les images de la réponse de la table response_image
-  const deleteImagesSql = 'DELETE FROM response_image WHERE response_id = ?';
-  db.query(deleteImagesSql, [responseId], (err, result) => {
+  // Delete the response from the response table
+  const deleteResponseSql = 'DELETE FROM response WHERE id = ?';
+  db.query(deleteResponseSql, [responseId], (err, result) => {
     if (err) {
       throw err;
     }
 
-    // Supprimer la réponse de la table response
-    const deleteResponseSql = 'DELETE FROM response WHERE id = ?';
-    db.query(deleteResponseSql, [responseId], (err, result) => {
-      if (err) {
-        throw err;
-      }
-
-      // Rediriger vers la page d'index des réponses avec un paramètre de succès
-      res.redirect('/response-sub-urgance?success=true');
-    });
+    // Redirect to the response index page with a success parameter
+    res.redirect('/response-sub-urgance?success=true');
   });
 });
 //fetch the data of the response want to update it
 app.get('/update-response/:id', (req, res) => {
   const responseId = req.params.id;
   const responseSql = 'SELECT * FROM response WHERE id = ?';
-  const imagesSql = 'SELECT * FROM response_image WHERE response_id = ?';
 
   db.query(responseSql, [responseId], (err, responseResults) => {
     if (err) {
@@ -369,123 +364,102 @@ app.get('/update-response/:id', (req, res) => {
     }
 
     const response = responseResults[0];
-
-    db.query(imagesSql, [responseId], (err, imagesResults) => {
-      if (err) {
-        throw err;
-      }
-
-      const images = imagesResults;
-
-      res.render('response-sub-urgance/update-response', {
-         title: 'Update Sub Urgance',
-          activePage: 'sub urgances', 
-          response, 
-          images: imagesResults ,
-         });
+    console.log(response);
+    res.render('response-sub-urgance/update-response', {
+      title: 'Update Sub Urgance',
+      activePage: 'sub urgances',
+      response,
     });
   });
 });
 //update the response
-// app.post('/update-response-data/:id', upload.array('image'), async (req, res) => {
-//   try {
-//     const responseId = req.params.id;
-//     const { 'sub-urgance-name': subUrganceName, description } = req.body;
-//     const imageFiles = req.files;
+app.post('/update-response-data/:id', upload.fields([{ name: 'images' }, { name: 'image_title' }]), (req, res) => {
+  const responseId = req.params.id;
+  const imageFiles = req.files['images'];
+  const imageTitleFiles = req.files['image_title'];
+  const responseData = {
+    title: req.body['sub-urgance-name'],
+    description: req.body['description'],
+    sub_urgance_id: req.body['category'] // Assuming the select element has name="category"
+  };
 
-//     // Update the response data in the database
-//     const updateResponseSql = 'UPDATE response SET title = ?, description = ? WHERE id = ?';
-//     await db.query(updateResponseSql, [subUrganceName, description, responseId]);
-
-//     // Check if new images were uploaded
-//     if (imageFiles && imageFiles.length > 0) {
-//       // Upload new images to Cloudinary
-//       const uploadPromises = imageFiles.map((imageFile) => {
-//         return new Promise((resolve, reject) => {
-//           cloudinary.uploader.upload_stream({ resource_type: "auto" }, (error, result) => {
-//             if (error) {
-//               reject(error);
-//             } else {
-//               resolve(result.secure_url);
-//             }
-//           }).end(imageFile.buffer);
-//         });
-//       });
-
-//       const uploadedImageUrls = await Promise.all(uploadPromises);
-
-//       // Insert or update the response images in the database
-//       const responseImages = uploadedImageUrls.map((imageUrl) => {
-//         return {
-//           response_id: responseId,
-//           image_url: imageUrl,
-//         };
-//       });
-
-//       const responseImageValues = responseImages.map((image) => [image.response_id, image.image_url]);
-//       const responseImageSql =
-//         'INSERT INTO response_image (response_id, image_url) VALUES ? ON DUPLICATE KEY UPDATE image_url = VALUES(image_url)';
-//       await db.query(responseImageSql, [responseImageValues]);
-//     }
-
-//     // Images uploaded and response data updated successfully
-//     res.redirect('/response-sub-urgance?success=true');
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'An error occurred while updating the response data.' });
-//   }
-// });
-app.post('/update-response-data/:id', upload.array('image'), async (req, res) => {
-  try {
-    const responseId = req.params.id;
-    const { 'sub-urgance-name': subUrganceName, description } = req.body;
-    const imageFiles = req.files;
-
-    // Delete old images from the response_image table
-    const deleteImagesSql = 'DELETE FROM response_image WHERE response_id = ?';
-    await db.query(deleteImagesSql, responseId);
-
-    // Update the response data in the database
-    const updateResponseSql = 'UPDATE response SET title = ?, description = ? WHERE id = ?';
-    await db.query(updateResponseSql, [subUrganceName, description, responseId]);
-
-    // Check if new images were uploaded
-    if (imageFiles && imageFiles.length > 0) {
-      // Upload new images to Cloudinary
-      const uploadPromises = imageFiles.map((imageFile) => {
-        return new Promise((resolve, reject) => {
-          cloudinary.uploader.upload_stream({ resource_type: "auto" }, (error, result) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result.secure_url);
-            }
-          }).end(imageFile.buffer);
-        });
-      });
-
-      const uploadedImageUrls = await Promise.all(uploadPromises);
-
-      // Insert or update the response images in the database
-      const responseImages = uploadedImageUrls.map((imageUrl) => {
-        return {
-          response_id: responseId,
-          image_url: imageUrl,
-        };
-      });
-
-      const responseImageValues = responseImages.map((image) => [image.response_id, image.image_url]);
-      const responseImageSql =
-        'INSERT INTO response_image (response_id, image_url) VALUES ? ON DUPLICATE KEY UPDATE image_url = VALUES(image_url)';
-      await db.query(responseImageSql, [responseImageValues]);
+  // Update response data in the 'response' table
+  const sql = "UPDATE response SET title = ?, description = ?, suburganceid = ? WHERE id = ?";
+  db.query(sql, [responseData.title, responseData.description, responseData.sub_urgance_id, responseId], (err, result) => {
+    if (err) {
+      throw err;
     }
 
-    // Images uploaded and response data updated successfully
-    res.redirect('/response-sub-urgance?success=true');
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'An error occurred while updating the response data.' });
-  }
+    let processedImages = 0;
+
+    // Check if new title image is uploaded
+    if (imageTitleFiles && imageTitleFiles.length > 0 && imageTitleFiles[0]) {
+      const imageTitleFile = imageTitleFiles[0];
+      const { originalname, mimetype, buffer } = imageTitleFile;
+
+      // Upload new title image to Cloudinary
+      cloudinary.uploader.upload_stream((error, result) => {
+        if (error) {
+          throw error;
+        }
+
+        const { secure_url } = result;
+
+        // Update the 'response' table with the new title image URL
+        const updateTitleSql = "UPDATE response SET image_title = ? WHERE id = ?";
+        db.query(updateTitleSql, [secure_url, responseId], (err, result) => {
+          if (err) {
+            throw err;
+          }
+
+          processedImages++;
+
+          // Check if all images have been processed
+          if (processedImages === (imageFiles ? imageFiles.length : 0)) {
+            // Redirect to the urgency index page with a success parameter
+            res.redirect('/response-sub-urgance?success=true');
+          }
+        });
+      }).end(buffer);
+    }
+
+    // Check if new response image is uploaded
+    if (imageFiles && imageFiles.length > 0) {
+      // Iterate over each uploaded image
+      for (let i = 0; i < imageFiles.length; i++) {
+        const imageFile = imageFiles[i];
+        const { originalname, mimetype, buffer } = imageFile;
+
+        // Upload image to Cloudinary
+        cloudinary.uploader.upload_stream((error, result) => {
+          if (error) {
+            throw error;
+          }
+
+          const { public_id, secure_url } = result;
+
+          // Update the 'response' table with the new response image URL
+          const updateResponseSql = "UPDATE response SET desc_image = ? WHERE id = ?";
+          db.query(updateResponseSql, [secure_url, responseId], (err, result) => {
+            if (err) {
+              throw err;
+            }
+
+            processedImages++;
+
+            // Check if all images have been processed
+            if (processedImages === imageFiles.length) {
+              // Redirect to the urgency index page with a success parameter
+              res.redirect('/response-sub-urgance?success=true');
+            }
+          });
+        }).end(buffer);
+      }
+    } else {
+      // Redirect to the urgency index page with a success parameter
+      res.redirect('/response-sub-urgance?success=true');
+    }
+  });
 });
 // Get the details of the response
 app.get('/details-response/:id', (req, res) => {
@@ -508,19 +482,10 @@ app.get('/details-response/:id', (req, res) => {
       return res.status(404).send('Response not found');
     }
 
-    const imagesSql = 'SELECT * FROM response_image WHERE response_id = ?';
-    db.query(imagesSql, responseId, (imagesErr, imagesResults) => {
-      if (imagesErr) {
-        throw imagesErr;
-      }
-
-      const images = imagesResults;
-      console.log(response, images);
-      res.render('response-sub-urgance/details-response', { response, images, title: 'Response Details', activePage: 'responses' });
-    });
+    console.log(response);
+    res.render('response-sub-urgance/details-response', { response, title: 'Response Details', activePage: 'responses' });
   });
 });
-// Get the doctors users
 // Get users with Doctor role
 app.get('/doctors', (req, res) => {
   const sql = 'SELECT * FROM users WHERE role = "Doctor"';

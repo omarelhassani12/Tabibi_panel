@@ -54,11 +54,14 @@
               <p><strong>Description: <br></strong> <%= response.description %></p>
               <p><strong>Urgance Name: </strong> <%= response.name %></p>
               
-              <div class="response-images">
-                <% images.forEach((image) => { %>
-                  <img src="<%= image.image_url %>" alt="Response Image" class="img-fluid rectangular-image" style="border: 2px solid black; width: 200px; height: 180px; ">
-                <% }); %>
-              </div>
+             <div class="row">
+              <div class="title-images">
+                <img src="<%= response.image_title	 %>" alt="title Image" class="img-fluid rectangular-_title" style="border: 2px solid black; width: 200px; height: 180px; ">
+            </div>
+            <div class="response-images">
+                <img src="<%= response.desc_image	 %>" alt="Response Image" class="img-fluid rectangular-image" style="border: 2px solid black; width: 200px; height: 180px; ">
+            </div>
+             </div>
               
             </div>
             <!-- /.card -->

@@ -56,6 +56,7 @@
                   <thead>
                     <tr>
                       <th>Title</th>
+                      <!-- <th>title image</th> -->
                       <th>description</th>
                       <th>Action</th>
                     </tr>
@@ -64,6 +65,7 @@
                     <% responseSubUrgance.forEach((response) => { %>
                       <tr>
                         <td class="text-center"><%= response.title %></td>
+                        <!-- <td class="text-center"><img src="<%= response.image_title %>" width="100px" height= "auto"></td> -->
                         <td class="text-center"><%= response.description.substring(0, 50) + '...' %></td>
                         <td class="text-center">
                           <a href="/update-response/<%= response.id %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
@@ -76,6 +78,7 @@
                   <tfoot>
                     <tr>
                       <th>Title</th>
+                      <!-- <th>title image</th> -->
                       <th>description</th>
                       <th>Action</th>
                     </tr>
