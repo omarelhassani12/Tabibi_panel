@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head-doc.ejs') %>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../partials/nav.ejs') %>
+
+<!-- Main Sidebar Container -->
+<%- include('../partials/aside.ejs') %>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1> new response</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">new response</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+ 
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="card" style="padding: 30px;">
+              <form id="new-urgance-form" method="post" action="/response-upload" enctype="multipart/form-data">
+                <h5 style="color: red;">Data obligatoire</h5>
+                <div class="mb-3">
+                  <label class="form-label">Response title</label>
+                  <input type="text" class="form-control" name="response-title" id="response-title-input" placeholder="Name" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description" rows="5" placeholder="Enter description" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Sub urgency</label>
+                  <select class="form-select" name="category" required>
+                    <optgroup label="Select sub urgency">
+                      <% sub_urgances.forEach((sub_urgance) => { %>
+                      <option value="<%= sub_urgance.id %>"><%= sub_urgance.name %></option>
+                      <% }); %>
+                    </optgroup>
+                  </select>
+                </div>
+   
+                <div class="row">
+                  <div class="mb-3">
+                    <label class="form-label">Image title</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="dropzone" id="dropzone-default">
+                              <div class="fallback">
+                                <input id="image_title" name="image_title" type="file">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Image Response</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="dropzone" id="dropzone-default">
+                              <div class="fallback">
+                                <input id="images" name="images" type="file">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary ms-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M12 5l0 14" />
+                      <path d="M5 12l14 0" />
+                    </svg>
+                    Create new response
+                  </button>
+                </div>
+              </form>
+              
+                
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="http://elhassaniomar.c1.biz">elhassaniomar.c1.biz</a>.</strong>
+    All rights reserved.
+  </footer> -->
+
+</div>
+<!-- ./wrapper -->
+<%- include('../partials/scripts-doc.ejs') %>
+
+</body>
+</html>

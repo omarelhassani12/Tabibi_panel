@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <%- include('./partials/head-doc.ejs') %>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <%- //include('./partials/preloader.ejs') %>
+
+
+  <!-- Navbar -->
+  <%- include('./partials/nav.ejs') %>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <%- include('./partials/aside.ejs') %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard</h1>
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3><%= userCount %></h3>
+                <p>Users</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-user-alt"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3><%= doctorCount %></h3>
+                <p>Doctors</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          
+          <!-- ./col -->
+        
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3><%= patientCount %></h3>
+                <p>Patients</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-procedures"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+      
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3><%= urganceCount %></h3>
+                <p>Urgence</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        
+        <!-- /.row (main row) -->
+        <div class="row">
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Age Distribution</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <canvas id="ageDistributionChart"></canvas>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+        
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="http://elhassaniomar.c1.biz">elhassaniomar.c1.biz</a>.</strong>
+    All rights reserved.
+  </footer> -->
+</div>
+<!-- ./wrapper -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ageDistributionChart = document.getElementById('ageDistributionChart').getContext('2d');
+
+  // Fetch the data from the API endpoint
+  fetch('/api/age-distribution')
+    .then((response) => response.json())
+    .then((data) => {
+      // Extract the age groups and user counts from the data
+      const { ageGroups, userCounts } = data;
+
+      // Create the chart with the retrieved data
+      new Chart(ageDistributionChart, {
+        type: 'bar',
+        data: {
+          labels: ageGroups, // Use the retrieved age groups
+          datasets: [
+            {
+              label: 'Users',
+              data: userCounts, // Use the retrieved user counts
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+</script>
+
+<script>
+  // const ageDistributionChart = document.getElementById('ageDistributionChart').getContext('2d');
+
+  // new Chart(ageDistributionChart, {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ['0-18', '19-30', '31-45', '46-60', '61+'], // Age group labels
+  //     datasets: [
+  //       {
+  //         label: 'Users',
+  //         data: [10, 25, 30, 20, 15], // Counts of users in each age group
+  //         backgroundColor: 'rgba(75, 192, 192, 0.6)',
+  //         borderColor: 'rgba(75, 192, 192, 1)',
+  //         borderWidth: 1
+  //       }
+  //     ]
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     scales: {
+  //       y: {
+  //         beginAtZero: true
+  //       }
+  //     }
+  //   }
+  // });
+</script>
+
+<%- include('./partials/scripts.ejs') %>
+
+</body>
+</html>
+
+

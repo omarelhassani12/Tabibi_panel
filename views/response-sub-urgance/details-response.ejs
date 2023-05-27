@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head-doc.ejs') %>
+<head><style>
+  .image-container {
+    border: 2px solid #000;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .rectangle-image {
+    width: 200px;
+    height: 180px;
+    object-fit: cover;
+  }
+</style></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../partials/nav.ejs') %>
+
+<!-- Main Sidebar Container -->
+<%- include('../partials/aside.ejs') %>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1> Details response</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Details responses</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+ 
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card" style="padding: 40px;">
+              <!-- Render response details and images -->
+              <h1 class="d-flex justify-content-center"><%= response.title %></h1>
+              <hr>
+              <p><strong>Description: <br></strong> <%= response.description %></p>
+              <p><strong>Urgance Name: </strong> <%= response.name %></p>
+              
+             <div class="row">
+              <div class="title-images">
+                <img src="<%= response.image_title	 %>" alt="title Image" class="img-fluid rectangular-_title" style="border: 2px solid black; width: 200px; height: 180px; ">
+            </div>
+            <div class="response-images">
+                <img src="<%= response.desc_image	 %>" alt="Response Image" class="img-fluid rectangular-image" style="border: 2px solid black; width: 200px; height: 180px; ">
+            </div>
+             </div>
+              
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    
+    
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="http://elhassaniomar.c1.biz">elhassaniomar.c1.biz</a>.</strong>
+    All rights reserved.
+  </footer> -->
+
+</div>
+<!-- ./wrapper -->
+<%- include('../partials/scripts-doc.ejs') %>
+
+</body>
+</html>
