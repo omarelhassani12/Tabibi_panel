@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head-doc.ejs') %>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../partials/nav.ejs') %>
+
+<!-- Main Sidebar Container -->
+<%- include('../partials/aside.ejs') %>
+
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>sub urgances</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">sub urgances</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="card">
+              <div class="card-header">
+                  <div class="row">
+                      <div class="col-sm-12 text-right">
+                        <div class="col-auto ms-auto d-print-none">
+                          <div class="d-flex justify-content-end">
+                            <a href="/addSubUrgance" class="btn btn-primary d-none d-sm-inline-block" >
+                                      Create new urgance
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>title</th>
+                      <th>image</th>
+                      <th>urgence</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% subUrgances.forEach((suburgance) => { %>
+                      <tr>
+                        <td class="text-center"><%= suburgance.name %></td>
+                        <td class="text-center">
+                          <img src="<%= suburgance.image %>" alt="Urgance Image" style="width: 100px; height: auto;">
+                        </td>
+                        <td class="text-center"><%= suburgance.urgency_name %></td>
+                        <td class="text-center">
+                          <a href="/update-sub-urgance/<%= suburgance.id %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                          <a href="/delete-suburgance/<%= suburgance.id %>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>title</th>
+                      <th>image</th>
+                      <th>urgence</th>
+                      <th>Action</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="http://elhassaniomar.c1.biz">elhassaniomar.c1.biz</a>.</strong>
+    All rights reserved.
+  </footer> -->
+
+  <!-- <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New sub urgency</h5>
+          <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <h5 style="color: red;">Required Data</h5>
+  
+          <div class="mb-3">
+            <label class="form-label">sub urgency Name</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category urgency</label>
+            <select class="form-select" required>
+              <option value="">Select Category</option>
+              <option value="category1">Category 1</option>
+              <option value="category2">Category 2</option>
+              <option value="category3">Category 3</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Urgency Image</h3>
+                    <form class="dropzone" id="dropzone-default" action="./" autocomplete="off" novalidate>
+                      <div class="fallback">
+                        <input name="image" type="file" required>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+            Create new urgency
+          </a>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<%- include('../partials/scripts-doc.ejs') %>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <%- include('./partials/head-sign.ejs') %>
+
+  <body  class=" d-flex flex-column">
+    <script src="./static/js/demo-theme.min.js?1674944402"></script>
+    <div class="page page-center">
+      <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+          <a href="." class="navbar-brand navbar-brand-autodark"><img src="./images/TABIBI.png" height="106" alt="TABIBI"></a>
+        </div>
+        <form class="card card-md" action="/auth/register" method="POST" autocomplete="off" novalidate >
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">Create new <b>ADMIN</b> account</h2>
+            <div class="mb-3">
+              <label class="form-label">User name</label>
+              <input name="username" type="text" class="form-control" placeholder="Enter name" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input name="email" type="email" class="form-control" placeholder="Enter email" required>
+            </div>
+            <div class="mb-3">
+              <!-- <label class="form-label">Role</label> -->
+              <input name="role" type="hidden" class="form-control" placeholder="Role" value="Admin" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <div class="input-group input-group-flat">
+                <input name="password" type="password" class="form-control"  placeholder="Password"  autocomplete="off" required>
+              </div>
+            </div>
+            <div class="form-footer">
+              <button type="submit" class="btn btn-primary w-100">Create new account</button>
+            </div>
+          </div>
+        </form>
+        <div class="text-center text-muted mt-3">
+          Already have account? <a href="/sign-in" tabindex="-1">Sign in</a>
+        </div>
+      </div>
+    </div>
+    <%- include('./partials/scripts-sign.ejs') %>
+
+  </body>
+</html>

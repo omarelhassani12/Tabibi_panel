@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head-doc.ejs') %>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../partials/nav.ejs') %>
+
+  <!-- Main Sidebar Container -->
+  <%- include('../partials/aside.ejs') %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>urgances</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">urgances</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+   
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-sm-12 text-right">
+                    <div class="col-auto ms-auto d-print-none">
+                      <div class="d-flex justify-content-end">
+                        <a href="/addUrgance" class="btn btn-primary d-none d-sm-inline-block">
+                          Create new Urgance
+                        </a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Image</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% urgances.forEach((urgance) => { %>
+                    <tr>
+                      <td class="text-center"><%= urgance.name %></td>
+                      <td class="text-center">
+                        <img src="<%= urgance.image %>" alt="Urgance Image" style="width: 100px; height: auto;">
+                      </td>
+                      <td class="text-center">
+                        <a href="/update-urgance/<%= urgance.id %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                        <a href="/delete-urgance/<%= urgance.id %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this urgency?');"><i class="fas fa-trash"></i></a>
+                      </td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Title</th>
+                      <th>Image</th>
+                      <th>Action</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              
+              
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+<script>
+
+
+
+</script>
+
+
+<!-- <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Urgency Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img src="./img/urgency.png" alt="Urgency Image" class="img-fluid mb-3" style="width: 150px;">
+        </div>
+        <img src=""></img>
+        <p><strong>Name:</strong> <span id="urgencyDetailsName"></span></p>
+        <p><strong>Created At:</strong> <span id="urgencyDetailsCreatedAt"></span></p>
+        
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+          Close
+        </a>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+  
+  
+  
+  <!-- /.content-wrapper -->
+  <script src="/static/scriptUrgance.js"></script>
+
+  <!-- ./wrapper -->
+  <%- include('../partials/scripts-doc.ejs') %>
+
+</body>
+</html>
